@@ -1,7 +1,7 @@
 {
-  "name": "xyrus-license-system",
-  "version": "1.0.0",
-  "dependencies": {
-    "firebase-admin": "^11.10.1"
-  }
+  "version": 2,
+  "rewrites": [
+    { "source": "/api/(.*)", "destination": "/api/$1" }
+  ],
+  "cleanUrls": true
 }
