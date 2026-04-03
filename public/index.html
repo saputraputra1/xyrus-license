@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XYRUS | License Control</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+</head>
+<body class="bg-[#050506] text-slate-200 font-sans">
+    <!-- Auth Gate -->
+    <div id="auth-gate" class="flex items-center justify-center min-h-screen">
+        <div class="bg-[#0f0f12] p-10 rounded-3xl border border-slate-800 w-full max-w-md shadow-2xl">
+            <h1 class="text-3xl font-black text-red-600 mb-2 tracking-tighter">XYRUS CORE</h1>
+            <p class="text-slate-500 text-sm mb-8">Authorization required to access command center.</p>
+            <input type="email" id="email" placeholder="Admin/Reseller Email" class="w-full p-4 mb-4 bg-[#1c1c21] border border-slate-800 rounded-xl outline-none focus:border-red-600 transition-all">
+            <input type="password" id="pass" placeholder="Secret Key" class="w-full p-4 mb-8 bg-[#1c1c21] border border-slate-800 rounded-xl outline-none focus:border-red-600 transition-all">
+            <button onclick="login()" class="w-full bg-red-600 hover:bg-red-700 text-white font-black p-4 rounded-xl shadow-lg shadow-red-900/20 transition-all">INITIALIZE</button>
+        </div>
+    </div>
+
+    <!-- Main Panel -->
+    <div id="panel" class="hidden max-w-7xl mx-auto p-6 lg:p-10">
+        <header class="flex flex-col md:flex-row justify-between items-start md:items-center mb-12 gap-4">
+            <div>
+                <h1 id="role-title" class="text-4xl font-black tracking-tighter text-red-600 uppercase">DASHBOARD</h1>
+                <p id="user-display" class="text-slate-500 font-mono text-sm mt-1"></p>
+            </div>
+            <button onclick="firebase.auth().signOut()" class="bg-[#1c1c21] hover:bg-slate-800 px-6 py-2 rounded-full text-xs font-bold border border-slate-700 transition">TERMINATE SESSION</button>
+        </header>
+
+        <!-- License Management Card -->
+        <div class="bg-[#0f0f12] rounded-3xl border border-slate-800 overflow-hidden shadow-2xl">
+            <div class="p-8 border-b border-slate-800 flex flex-col md:flex-row justify-between items-center gap-6">
+                <h3 class="font-black text-xl tracking-tight">LICENSE DATABASE</h3>
+                <div class="flex flex-wrap gap-3 w-full md:w-auto">
+                    <input type="text" id="note" placeholder="Client Name/Note" class="bg-[#1c1c21] border border-slate-800 px-4 py-2 rounded-xl text-sm outline-none focus:border-red-600 flex-1">
+                    <input type="number" id="days" value="30" class="bg-[#1c1c21] border border-slate-800 px-4 py-2 rounded-xl text-sm w-20 text-center outline-none">
+                    <button onclick="generateKey()" class="bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded-xl text-sm font-black transition">GENERATE NEW KEY</button>
+                </div>
+            </div>
+            
+            <div class="overflow-x-auto">
+                <table class="w-full text-left">
+                    <thead class="bg-slate-900/50 text-slate-500 uppercase text-[10px] font-black tracking-widest">
+                        <tr>
+                            <th class="p-6">License Key</th>
+                            <th class="p-6">Status</th>
+                            <th class="p-6">Expires</th>
+                            <th class="p-6">HWID / Device</th>
+                            <th class="p-6">Note</th>
+                            <th class="p-6 text-right">Control</th>
+                        </tr>
+                    </thead>
+                    <tbody id="license-table" class="text-sm font-medium">
+                        <!-- Data injected here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="admin.js"></script>
+</body>
+</html>
